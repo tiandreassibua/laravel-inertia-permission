@@ -64,13 +64,6 @@ defineProps(["posts"]);
                                     <Link :href="route('posts.edit', post.id)"
                                         class="text-green-500 font-semibold hover:text-green-600">Edit</Link>
                                 </template>
-                                <!-- <Link
-                                        :href="route('roles.destroy', role.id)"
-                                        method="delete"
-                                        as="button"
-                                        class="text-red-500 font-semibold hover:text-red-600"
-                                        >Delete</Link
-                                        > -->
                                 <template v-if="hasPermission('delete post')">
                                     <button @click="confirmDeletePost" class="text-red-400 hover:text-red-600">
                                         Delete
