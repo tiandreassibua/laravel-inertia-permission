@@ -43,12 +43,19 @@ defineProps(["permissions"]);
                             <TableDataCell>{{ permission.name }}</TableDataCell>
                             <TableDataCell class="space-x-2">
                                 <Link
-                                    :href="route('permissions.edit', permission.id)"
+                                    :href="
+                                        route('permissions.edit', permission.id)
+                                    "
                                     class="text-green-500 font-semibold hover:text-green-600"
                                     >Edit</Link
                                 >
                                 <Link
-                                    :href="route('permissions.destroy', permission.id)"
+                                    :href="
+                                        route(
+                                            'permissions.destroy',
+                                            permission.id
+                                        )
+                                    "
                                     method="delete"
                                     as="button"
                                     class="text-red-500 font-semibold hover:text-red-600"

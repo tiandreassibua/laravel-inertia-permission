@@ -2,15 +2,20 @@
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 
-import Checkbox from "@/Components/Checkbox.vue";
-import GuestLayout from "@/Layouts/GuestLayout.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 
+import VueMultiselect from "vue-multiselect";
+
+defineProps({
+    permissions: Array,
+});
+
 const form = useForm({
     name: "",
+    permissions: [],
 });
 </script>
 
@@ -26,10 +31,12 @@ const form = useForm({
                     >Back</Link
                 >
             </div>
-            <div class="mt-6 max-w-md mx-auto bg-slate-100 p-6 rounded-md shadow-md">
-                <h1 class="text-xl py-2">Create New Role</h1>
+            <div
+                class="mt-6 max-w-6xl mx-auto bg-slate-100 p-6 rounded-md shadow-md"
+            >
+                <h1 class="text-xl font-semibold text-indigo-700 py-2">Create New Role</h1>
                 <form @submit.prevent="form.post(route('roles.store'))">
-                    <div>
+                    <div class="mt-4">
                         <InputLabel for="name" value="Name" />
 
                         <TextInput
@@ -41,6 +48,20 @@ const form = useForm({
                         />
 
                         <InputError class="mt-2" :message="form.errors.name" />
+                    </div>
+
+                    <div class="mt-4">
+                        <InputLabel for="permissions" value="Permissions" />
+                        <VueMultiselect
+                            id="permissions"
+                            v-model="form.permissions"
+                            :options="permissions"
+                            :multiple="true"
+                            :close-on-select="false"
+                            placeholder="Pick some"
+                            label="name"
+                            track-by="id"
+                        />
                     </div>
 
                     <div class="flex items-center mt-4">
@@ -56,3 +77,4 @@ const form = useForm({
         </div>
     </AdminLayout>
 </template>
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
