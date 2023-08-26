@@ -1,6 +1,7 @@
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
+import { usePermission } from "@/composables/permissions.js"
 
 import Table from "@/Components/Table.vue";
 import TableRow from "@/Components/TableRow.vue";
@@ -20,6 +21,7 @@ const deletePost = (id) => {
 };
 
 const showConfirmDeletePostModal = ref(false);
+const { hasPermission } = usePermission();
 
 const closeModal = () => {
     showConfirmDeletePostModal.value = false;
@@ -38,8 +40,10 @@ defineProps(["posts"]);
         <div class="max-w-7xl mx-auto py-4">
             <div class="flex justify-between items-center">
                 <h1 class="font-semibold text-xl">Post Index Page</h1>
-                <Link :href="route('posts.create')"
-                    class="px-3 py-2 text-white font-semibold bg-indigo-500 hover:bg-indigo-700 rounded">New Post</Link>
+                <template v-if="hasPermission('create post')">
+                    <Link :href="route('posts.create')"
+                        class="px-3 py-2 text-white font-semibold bg-indigo-500 hover:bg-indigo-700 rounded">New Post</Link>
+                </template>
             </div>
             <div class="mt-6">
                 <Table>
@@ -54,19 +58,24 @@ defineProps(["posts"]);
                         <TableRow v-if="posts.length > 0" v-for="post in posts" :key="post.id" class="border-b">
                             <TableDataCell>{{ post.id }}</TableDataCell>
                             <TableDataCell>{{ post.title }}</TableDataCell>
+
                             <TableDataCell class="space-x-2">
-                                <Link :href="route('posts.edit', post.id)"
-                                    class="text-green-500 font-semibold hover:text-green-600">Edit</Link>
+                                <template v-if="hasPermission('update post')">
+                                    <Link :href="route('posts.edit', post.id)"
+                                        class="text-green-500 font-semibold hover:text-green-600">Edit</Link>
+                                </template>
                                 <!-- <Link
-                                    :href="route('roles.destroy', role.id)"
-                                    method="delete"
-                                    as="button"
-                                    class="text-red-500 font-semibold hover:text-red-600"
-                                    >Delete</Link
-                                > -->
-                                <button @click="confirmDeletePost" class="text-red-400 hover:text-red-600">
-                                    Delete
-                                </button>
+                                        :href="route('roles.destroy', role.id)"
+                                        method="delete"
+                                        as="button"
+                                        class="text-red-500 font-semibold hover:text-red-600"
+                                        >Delete</Link
+                                        > -->
+                                <template v-if="hasPermission('delete post')">
+                                    <button @click="confirmDeletePost" class="text-red-400 hover:text-red-600">
+                                        Delete
+                                    </button>
+                                </template>
                                 <Modal :show="showConfirmDeletePostModal" @close="closeModal">
                                     <div class="p-6">
                                         <h2 class="text-lg font-semibold text-slate-800">

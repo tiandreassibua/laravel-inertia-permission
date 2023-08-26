@@ -18,7 +18,7 @@ const form = useForm({
     <Head title="Create new Post" />
 
     <AdminLayout>
-        <div class="max-w-7xl mx-auto py-4">
+        <div class="max-w-6xl mx-auto py-4">
             <div class="flex justify-between items-center">
                 <Link :href="route('posts.index')"
                     class="px-3 py-2 text-white font-semibold bg-indigo-500 hover:bg-indigo-700 rounded">Back</Link>
@@ -30,7 +30,7 @@ const form = useForm({
                         <InputLabel for="title" value="Title" />
 
                         <TextInput id="title" type="text" class="mt-1 block w-full" v-model="form.title"
-                            autocomplete="title" />
+                            autocomplete="title" autofocus />
 
                         <InputError class="mt-2" :message="form.errors.title" />
                     </div>
