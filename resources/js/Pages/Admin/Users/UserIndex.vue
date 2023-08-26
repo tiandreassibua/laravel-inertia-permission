@@ -14,8 +14,8 @@ import { ref } from "vue";
 defineProps(["users"]);
 const form = useForm({});
 
-const deleteUser = (userId) => {
-    form.delete(route("users.destroy", userId), {
+const deleteUser = (id) => {
+    form.delete(route("users.destroy", id), {
         onSuccess: () => closeModal(),
     });
 };
